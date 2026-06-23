@@ -1,11 +1,14 @@
 package com.MD.Booking.Service.model;
 
+import com.MD.Booking.Service.domain.BookingStatus;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
+@Data
 public class Booking {
 
 
@@ -25,14 +28,9 @@ public class Booking {
     @ElementCollection
     private Set<Long> serviceIds;
 
-    private BookingStatus status;
+    private BookingStatus status=BookingStatus.PENDING;
 
     private int totalServices;
-
-
-
-
-
 
 
 }
