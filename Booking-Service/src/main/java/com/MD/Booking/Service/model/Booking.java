@@ -30,7 +30,7 @@ public class Booking {
 
     private BookingStatus status=BookingStatus.PENDING;
 
-    private int totalServices;
+    private int totalPrice;
 
 
 }
