@@ -5,11 +5,14 @@ import com.MD.Booking.Service.DTO.*;
 import com.MD.Booking.Service.Mapper.BookingMapper;
 import com.MD.Booking.Service.Repository.BookingRepository;
 import com.MD.Booking.Service.Service.BookingService;
+import com.MD.Booking.Service.domain.BookingStatus;
 import com.MD.Booking.Service.model.Booking;
+import com.MD.Booking.Service.model.SalonReport;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -75,14 +78,42 @@ public class BookingController {
         Booking booking = bookingService.getBookingById(bookingId);
         return ResponseEntity.ok(BookingMapper.toDTO(booking));
     }
-}
 
-    @PutMapping("/{bookingId}")
-    public ResponseEntity<Set<BookingDTO>> getBookingsById(
-            @PathVariable Long bookingId
+
+    @PutMapping("/{bookingId}/status")
+    public ResponseEntity<BookingDTO> updateBookingStatus(
+            @PathVariable Long bookingId,
+            @RequestParam BookingStatus status
     ) throws Exception {
-        Booking booking =bookingService.getBookingById(bookingId);
+        Booking booking =bookingService.updateBooking(bookingId, status);
         return ResponseEntity.ok(BookingMapper.toDTO(booking));
     }
+
+    @GetMapping("/slots/salon/{salonId}/date/{date}")
+    public ResponseEntity <List<BookingSlotDTO>> getBookedSlot(
+            @PathVariable Long salonId,
+            @RequestParam(required = false) LocalDate date
+    ) throws Exception {
+       List<Booking> booking = bookingService.getBookingByDate(date,salonId);
+
+       List<BookingSlotDTO> slotDTOS=booking.stream()
+               .map(bookings ->{
+                   BookingSlotDTO slotDTO=new BookingSlotDTO();
+                   slotDTO.setStartTime(bookings.getStartTime());
+                   slotDTO.setEndTime(bookings.getEndTime());
+                   return slotDTO;
+                       }
+                       ).collect(Collectors.toList());
+        return ResponseEntity.ok(slotDTOS);
+    }
+
+    @GetMapping("/report")
+    public ResponseEntity <SalonReport> getSalonReport(
+
+    ) throws Exception {
+       SalonReport  report= bookingService.getSalonReport(1L);
+        return ResponseEntity.ok(report);
+    }
+
 
 }
