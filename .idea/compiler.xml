@@ -7,9 +7,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="category" />
         <module name="Service-offering" />
         <module name="user-service" />
+        <module name="payment-service" />
+        <module name="category" />
       </profile>
       <profile name="Annotation profile for Booking-Service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -19,6 +20,14 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
         </processorPath>
         <module name="Booking-Service" />
+      </profile>
+      <profile name="Annotation profile for salon-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
+        </processorPath>
         <module name="salon-service" />
       </profile>
     </annotationProcessing>
@@ -28,6 +37,7 @@
       <module name="Booking-Service" options="-parameters" />
       <module name="Service-offering" options="-parameters" />
       <module name="category" options="-parameters" />
+      <module name="payment-service" options="-parameters" />
       <module name="salon-service" options="-parameters" />
       <module name="user-service" options="-parameters" />
     </option>
